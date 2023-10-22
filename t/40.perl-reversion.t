@@ -184,6 +184,35 @@ END
 );
 
 with_file(
+  "Foo.pm", <<'END',
+package Foo v1.2.3;
+1;
+END
+  sub {
+    is_deeply( find( $dir ), { found => 'v1.2.3' }, "package-v-string found in pm" );
+    _run( $dir, '-set', '1.2' );
+    is_deeply( find( $dir ), { found => 'v1.2' }, "set version keeps v prefix" );
+    _run( $dir, '-bump' );
+    is_deeply( find( $dir ), { found => 'v1.3' }, "bump subversion with v prefix" );
+  },
+);
+
+with_file(
+  "Foo.pm", <<'END',
+package Foo 1.0;
+1;
+END
+  sub {
+    #my %newlines= count_newlines( @files );
+    is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
+    _run( $dir, '-set', '1.2' );
+    _run( $dir, '-bump' );
+    is_deeply( find( $dir ), { found => '1.3' }, "bump version without v prefix" );
+    #ok_newlines(\%newlines);
+  },
+);
+
+with_file(
   README => <<'END',
 This README describes version 1.2.3 of Flurble.
 END

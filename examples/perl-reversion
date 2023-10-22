@@ -224,9 +224,9 @@ sub version_re_perl_pack {
   my $ver_re = shift;
 
   return
-   qr{ ^(\s*package\s+\w+[:\w]*\s+ \D* )
+   qr{ ^(\s* package \s+ (?: \w+ (?: (?: :: | ' ) \w+ )* \s+ ))
                  $ver_re
-                 ( .* ) $ }x;
+                 ( .* \s* ) \z }x;
 }
 
 
@@ -359,6 +359,10 @@ sub find_versions {
         {
           re   => qr{ ^ = (?! cut ) }x,
           goto => 'pod',
+        },
+        {
+          re   => version_re_perl_pack( $ver_re ),
+          mark => 1,
         },
         {
           re   => version_re_perl( $ver_re ),
