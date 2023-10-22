@@ -22,7 +22,7 @@ my $RUN = "$^X $libs examples/perl-reversion";
 if ( system( "$RUN -quiet" ) ) {
   plan skip_all => 'cannot run perl-reversion, skipping its tests';
 }
-plan tests => 44;
+plan tests => 45;
 
 my $dir = File::Temp::tempdir( CLEANUP => 1 );
 
@@ -177,6 +177,7 @@ END
   sub {
     is_deeply( find( $dir ), { found => 'v1.2.3' }, "found in pm" );
     _run( $dir, '-set', '1.2' );
+    is_deeply( find( $dir ), { found => 'v1.2' }, "set subversion keeps v prefix" );
     _run( $dir, '-bump' );
     is_deeply( find( $dir ), { found => 'v1.3' }, "bump subversion with v prefix" );
   },
