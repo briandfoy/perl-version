@@ -70,7 +70,7 @@ sub count_newlines {
     my %result;
     for my $name (@_) {
         my $content= read_file($name, binmode => ':raw' );
-        
+
         $result{ $name }= +{
             map {
                 my $key= unpack 'H*', $_;
@@ -85,7 +85,7 @@ sub count_newlines {
 sub ok_newlines {
     my( $name, %expected ) = @_;
     my %got= count_newlines( keys %expected );
-    
+
     is_deeply \%got, \%expected,
         "$name - All newlines remain intact"
       or diag Dumper [ \%expected, \%got ];
@@ -94,11 +94,11 @@ sub ok_newlines {
 
 sub runtests {
   my ( $name, $version ) = @_;
-  
+
   # Check that we keep line endings consistent:
   my @files= (grep { -f } glob( "$dir/*" ), glob( "$dir/*/*" ) );
   my %newlines= count_newlines( @files );
-  
+
   is_deeply( find( $dir ), { found => '1.2.3' }, "found in $name" );
   is_deeply( find( $dir, "-current=1.2" ),
     {}, "partial does not match" );
