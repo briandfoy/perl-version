@@ -10,9 +10,9 @@ use FileHandle;
 use File::Slurp::Tiny qw(read_file);
 use Data::Dumper;
 
-if ( $^O =~ /MSWin32/ ) {
-  plan skip_all => 'cannot run on Windows';
-}
+#if ( $^O =~ /MSWin32/ ) {
+#  plan skip_all => 'cannot run on Windows';
+#}
 
 # -Mblib makes a lot of noise
 my $libs = join " ",
@@ -39,16 +39,7 @@ sub find {
 sub _run {
   my $cmd = "$RUN @_";
   #diag $cmd;
-  my $output;
-  my $pid = open my $fh, '-|';
-  die "Could not open pipe: $!" unless defined $pid;
-  if ( $pid ) {
-    $output = join '', <$fh>;
-  }
-  else {
-    close *STDERR;
-    exec $cmd;
-  }
+  my $output = readpipe( $cmd );
 
   #diag $output;
   return { output => $output };
