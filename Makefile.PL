@@ -71,7 +71,6 @@ my %WriteMakefile = (
 		'Scalar::Util'       => 0,
 		'Getopt::Long'       => '2.34',
 		'Pod::Usage'         => '1.3',
-		'File::Slurp::Tiny'  => 0,
 		'Data::Dumper'       => 0,
 		},
 
@@ -84,7 +83,7 @@ my %WriteMakefile = (
 				web  => $github,
 				},
 			bugtracker => {
-				web    => "$github/issues",
+				web  => "$github/issues",
 				},
 			homepage => $github,
 			},
