@@ -140,7 +140,7 @@ my @skip = ( qw( .svn .git CVS .DS_Store ), @dir_skip );
 # regex, but I fixed the regex for precedence with anchors, and
 # quotemeta everything.
 my $SKIP = '^( ' . join( ' | ', map { quotemeta($_) } @skip ) . ' )$';
-note( "Regex is $SKIP" );
+#note( "Regex is $SKIP\n" );
 $SKIP = qr/$SKIP/x;
 
 my @files = @ARGV ? expand_dirs( @ARGV ) : find_proj_files();
@@ -224,9 +224,9 @@ sub version_re_perl_pack {
   my $ver_re = shift;
 
   return
-   qr{ ^(\s*package\s+\w+[:\w]*\s+ \D* )
+   qr{ ^(\s* package \s+ (?: \w+ (?: (?: :: | ' ) \w+ )* \s+ ))
                  $ver_re
-                 ( .* ) $ }x;
+                 ( .* \s* ) \z }x;
 }
 
 
@@ -296,7 +296,7 @@ sub set_versions {
 sub find_version_for_doc {
   my ( $ver_found, $version, $name, $info, $machine ) = @_;
 
-  note( "Scanning $name" );
+  note( "Scanning $name\n" );
 
   my $state = $machine->{init};
   my $lines = $info->{lines};
@@ -359,6 +359,10 @@ sub find_versions {
         {
           re   => qr{ ^ = (?! cut ) }x,
           goto => 'pod',
+        },
+        {
+          re   => version_re_perl_pack( $ver_re ),
+          mark => 1,
         },
         {
           re   => version_re_perl( $ver_re ),
