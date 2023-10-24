@@ -20,7 +20,6 @@ my $RUN = "$^X $libs examples/perl-reversion";
 if ( system( "$RUN -quiet" ) ) {
   plan skip_all => 'cannot run perl-reversion, skipping its tests';
 }
-plan tests => 45;
 
 my $dir = File::Temp::tempdir( CLEANUP => 1 );
 
@@ -213,3 +212,5 @@ with_file(
   README => "This README describes\x{0d}\x{0a}version 1.2.3 of\x{0d}\x{0a}Flurble.\x{0a}",
   sub { runtests( newlines => "1.2.3" ) },
 );
+
+done_testing();
