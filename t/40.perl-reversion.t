@@ -6,8 +6,6 @@ use Test::More;
 use File::Temp;
 use File::Path qw(mkpath);
 use File::Spec;
-use FileHandle;
-use File::Slurp::Tiny qw(read_file);
 use Data::Dumper;
 
 #if ( $^O =~ /MSWin32/ ) {
@@ -47,21 +45,24 @@ sub _run {
 
 sub with_file {
   my ( $name, $content, $code ) = @_;
-  my $fh = FileHandle->new( "> $dir/$name" )
-   or die "Can't open $dir/$name: $!";
+  my $path = File::Spec->catfile( $dir, $name );
+  open my $fh, '>', $path or die "Can't open $path: $!";
   binmode $fh;
   print $fh $content;
   close $fh;
   $code->();
-  unlink "$dir/$name" or die "Can't unlink $dir/$name: $!";
+  unlink $path or die "Can't unlink $path: $!";
 }
 
 sub count_newlines {
     my @newlines= ("\x{0d}\x{0a}","\x{0d}","\x{0a}");
     my %result;
     for my $name (@_) {
-        my $content= read_file($name, binmode => ':raw' );
-        
+        local $/;
+        open my $fh, '<:raw', $name;
+        my $content = do { local $/; <$fh> };
+        close $fh;
+
         $result{ $name }= +{
             map {
                 my $key= unpack 'H*', $_;
@@ -76,7 +77,7 @@ sub count_newlines {
 sub ok_newlines {
     my( $name, %expected ) = @_;
     my %got= count_newlines( keys %expected );
-    
+
     is_deeply \%got, \%expected,
         "$name - All newlines remain intact"
       or diag Dumper [ \%expected, \%got ];
@@ -85,12 +86,12 @@ sub ok_newlines {
 
 sub runtests {
   my ( $name, $version ) = @_;
-  
+
   # Check that we keep line endings consistent:
   my @files= (grep { -f } glob( "$dir/*" ), glob( "$dir/*/*" ) );
   my %newlines= count_newlines( @files );
-  
-  is_deeply( find( $dir ), { found => '1.2.3' }, "found in $name" );
+
+  is_deeply( find( $dir ), { found => $version }, "found in $name" );
   is_deeply( find( $dir, "-current=1.2" ),
     {}, "partial does not match" );
   _run( $dir, '-set', '1.2' );
@@ -111,8 +112,7 @@ sub runtests {
   );
 }
 
-FileHandle->new( "> $dir/Makefile.PL" );
-mkpath( "$dir/lib" );
+mkpath( File::Spec->catfile( $dir, "lib" ) );
 
 with_file(
   "META.yml", <<'END',
@@ -131,53 +131,53 @@ with_file(
   "META.yml", <<'END',
 ---
    bar: 2
-   version: 1.2.3
+   version: 7.8.9
    meta-spec:
      url: whatever
      version: 1.3
 END
-  sub { runtests( META => '1.2.3' ) },
+  sub { runtests( META => '7.8.9' ) },
 );
 
 with_file(
   "lib/Foo_pod.pm", <<'END',
 =head1 VERSION
 
-Version 1.2.3
+Version 2.4.6
 
 =cut
 END
-  sub { runtests( pod => "1.2.3" ) },
+  sub { runtests( pod => "2.4.6" ) },
 );
 
 with_file(
   "Foo.pm", <<'END',
 package Foo;
-our $VERSION = '1.2.3';
+our $VERSION = '3.6.9';
 1;
 END
-  sub { runtests( pm => "1.2.3" ) },
+  sub { runtests( pm => "3.6.9" ) },
 );
 
 with_file(
   "Foo.pm", <<'END',
 package Foo;
-our $VERSION = version->declare('v1.2.3');
+our $VERSION = version->declare('v7.6.5');
 1;
 END
   sub {
-    is_deeply( find( $dir ), { found => 'v1.2.3' }, "found in pm" );
-    _run( $dir, '-set', '1.2' );
+    is_deeply( find( $dir ), { found => 'v7.6.5' }, "found in pm" );
+    _run( $dir, '-set', '7.7' );
     _run( $dir, '-bump' );
-    is_deeply( find( $dir ), { found => 'v1.3' }, "bump subversion with v prefix" );
+    is_deeply( find( $dir ), { found => 'v7.8' }, "bump subversion with v prefix" );
   },
 );
 
 with_file(
   README => <<'END',
-This README describes version 1.2.3 of Flurble.
+This README describes version 5.4.6 of Flurble.
 END
-  sub { runtests( plain => "1.2.3" ) },
+  sub { runtests( plain => "5.4.6" ) },
 );
 
 with_file(
