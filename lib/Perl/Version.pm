@@ -858,7 +858,7 @@ Return a normalised representation of a version.
 
 prints
 
-    v5.8.7_001
+    v5.8.7_01
 
 =item C<< numify >>
 
