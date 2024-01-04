@@ -2,17 +2,17 @@
 
 =encoding utf8
 
-=for HTML <a href="https://www.github.com/briandfoy/Perl--Version/actions?query=workflow%3Amacos"><img src="https://www.github.com/briandfoy/Perl--Version/workflows/macos/badge.svg"></a>
+=for HTML <a href="https://www.github.com/briandfoy/perl-version/actions?query=workflow%3Amacos"><img src="https://www.github.com/briandfoy/perl-version/workflows/macos/badge.svg"></a>
 
-=for HTML <a href="https://www.github.com/briandfoy/Perl--Version/actions?query=workflow%3Aubuntu"><img src="https://www.github.com/briandfoy/Perl--Version/workflows/ubuntu/badge.svg"></a>
+=for HTML <a href="https://www.github.com/briandfoy/perl-version/actions?query=workflow%3Aubuntu"><img src="https://www.github.com/briandfoy/perl-version/workflows/ubuntu/badge.svg"></a>
 
-=for HTML <a href="https://www.github.com/briandfoy/Perl--Version/actions?query=workflow%3Awindows"><img src="https://www.github.com/briandfoy/Perl--Version/workflows/windows/badge.svg"></a>
+=for HTML <a href="https://www.github.com/briandfoy/perl-version/actions?query=workflow%3Awindows"><img src="https://www.github.com/briandfoy/perl-version/workflows/windows/badge.svg"></a>
 
-=for HTML <a href='https://ci.appveyor.com/project/briandfoy/Perl--Version'><img src='https://ci.appveyor.com/api/projects/status/0p0pl0s7todbdxcv?svg=true' /></a>
+=for HTML <a href='https://ci.appveyor.com/project/briandfoy/perl-version'><img src='https://ci.appveyor.com/api/projects/status/0p0pl0s7todbdxcv?svg=true' /></a>
 
-=for HTML <a href='https://coveralls.io/github/briandfoy/Perl--Version?branch=master'><img src='https://coveralls.io/repos/github/briandfoy/Perl--Version/badge.svg?branch=master' alt='Coverage Status' /></a>
+=for HTML <a href='https://coveralls.io/github/briandfoy/perl-version?branch=master'><img src='https://coveralls.io/repos/github/briandfoy/perl-version/badge.svg?branch=master' alt='Coverage Status' /></a>
 
-=for HTML <a href="https://github.com/briandfoy/Perl--Version/blob/master/LICENSE"><img src="https://img.shields.io/cpan/l/Perl-Version.svg" /></a>
+=for HTML <a href="https://github.com/briandfoy/perl-version/blob/master/LICENSE"><img src="https://img.shields.io/cpan/l/Perl-Version.svg" /></a>
 
 =for HTML <a href="https://metacpan.org/pod/Perl::Version"><img src="https://img.shields.io/cpan/v/Perl-Version.svg" /></A>
 
@@ -76,16 +76,16 @@ the source repository:
 
 =over 4
 
-=item *	L<https://github.com/briandfoy/Perl--Version>
+=item *	L<https://github.com/briandfoy/perl-version>
 
 =back
 
 If you find a problem, file a ticket in the L<issue
-tracker|https://github.com/briandfoy/Perl--Version/issues>:
+tracker|https://github.com/briandfoy/perl-version/issues>:
 
 =over 4
 
-=item *	L<https://github.com/briandfoy/Perl--Version/issues>
+=item *	L<https://github.com/briandfoy/perl-version/issues>
 
 =back
 

@@ -1058,9 +1058,9 @@ None reported.
 
 =head1 BUGS AND LIMITATIONS
 
-Please report any bugs or feature requests to
-C<bug-perl-version@rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org>.
+Please report any bugs or feature requests to the GitHub issues queue:
+
+	https://github.com/briandfoy/perl-version/issues
 
 =head1 AUTHOR
 
