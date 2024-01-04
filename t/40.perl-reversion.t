@@ -46,14 +46,14 @@ sub with_file {
   my ( $name, $content, $code ) = @_;
 
   subtest $name => sub {
-	  my $path = File::Spec->catfile( $dir, $name );
-	  open my $fh, '>', $path or die "Can't open $path: $!";
-	  binmode $fh;
-	  print $fh $content;
-	  close $fh;
-	  $code->();
-	  unlink $path or die "Can't unlink $path: $!";
-	};
+      my $path = File::Spec->catfile( $dir, $name );
+      open my $fh, '>', $path or die "Can't open $path: $!";
+      binmode $fh;
+      print $fh $content;
+      close $fh;
+      $code->();
+      unlink $path or die "Can't unlink $path: $!";
+    };
 }
 
 sub count_newlines {
@@ -222,13 +222,34 @@ END
   sub {
     is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
 
-	my $previous = '1.0';
+    my $previous = '1.0';
     foreach my $v ( qw(1.000005 1.000005_001 1.000005_01 1.000005 1.000005_02 1.000005_002 1.000005_003) ) {
-		_run( $dir, '-set', $v, '-numify' );
-		is_deeply( find( $dir ), { found => $v }, "set version from $previous to $v" );
-		$previous = $v;
-    	}
+        _run( $dir, '-set', $v, '-numify' );
+        is_deeply( find( $dir ), { found => $v }, "set version from $previous to $v" );
+        $previous = $v;
+    }
   },
 );
 
+with_file(
+  "FooBar.pm", <<'END',
+package FooBar 1.0;
+1;
+END
+  sub {
+    is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
+    my @table = (
+        [ qw( 1.000005 1.000006 ) ],
+        [ qw( 1.000005_001 1.000005_002 ) ],
+        [ qw( 1.000005_01 1.000005_02 ) ],
+    );
+
+    foreach my $row ( @table ) {
+        _run( $dir, '-set', $row->[0], '-numify' );
+        is_deeply( find( $dir ), { found => $row->[0] }, "set version to $row->[0]" );
+        _run( $dir, '-bump' );
+        is_deeply( find( $dir ), { found => $row->[1] }, "bump version from $row->[0] to $row->[1]" );
+    }
+  },
+);
 done_testing();
