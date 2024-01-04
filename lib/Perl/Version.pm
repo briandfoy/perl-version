@@ -1064,6 +1064,8 @@ L<http://rt.cpan.org>.
 
 =head1 AUTHOR
 
+This module is currently maintained by brian d foy C<< <briandfoy@pobox.com> >>.
+
 Andy Armstrong C<< <andy@hexten.net> >>
 
 Hans Dieter Pearcey C<< <hdp@cpan.org> >>
