@@ -44,13 +44,16 @@ sub _run {
 
 sub with_file {
   my ( $name, $content, $code ) = @_;
-  my $path = File::Spec->catfile( $dir, $name );
-  open my $fh, '>', $path or die "Can't open $path: $!";
-  binmode $fh;
-  print $fh $content;
-  close $fh;
-  $code->();
-  unlink $path or die "Can't unlink $path: $!";
+
+  subtest $name => sub {
+	  my $path = File::Spec->catfile( $dir, $name );
+	  open my $fh, '>', $path or die "Can't open $path: $!";
+	  binmode $fh;
+	  print $fh $content;
+	  close $fh;
+	  $code->();
+	  unlink $path or die "Can't unlink $path: $!";
+	};
 }
 
 sub count_newlines {
@@ -90,9 +93,9 @@ sub runtests {
   my @files= (grep { -f } glob( "$dir/*" ), glob( "$dir/*/*" ) );
   my %newlines= count_newlines( @files );
 
-  is_deeply( find( $dir ), { found => $version }, "found in $name" );
-  is_deeply( find( $dir, "-current=1.2" ),
-    {}, "partial does not match" );
+  is_deeply( find( $dir ), { found => $version }, "found $version in $name" );
+  is_deeply( find( $dir, "-current=1.2" ), {}, "partial does not match " );
+
   _run( $dir, '-set', '1.2' );
   ok_newlines( "$name -set", %newlines );
   _run( $dir, '-bump' );
