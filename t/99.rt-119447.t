@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# https://github.com/briandfoy/perl-version/issues/8
+
 use strict;
 use warnings;
 use version 0.77;
