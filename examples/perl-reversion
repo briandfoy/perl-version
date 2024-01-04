@@ -269,7 +269,12 @@ sub set_versions {
   my $force_to = shift;
 
   if ( $force_to ) {
+    # the forced formats set their own formats, so override the deatils
+    # in the string we want
+    # https://github.com/briandfoy/perl-version/issues/10
+    my $alpha_format = $new_version->{format}{alpha};
     $new_version = Perl::Version->new( $new_version->$force_to );
+    $new_version->{format}{alpha} = $alpha_format;
   }
 
   note( "Setting version to $new_version\n" );

@@ -223,9 +223,9 @@ END
     is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
 
 	my $previous = '1.0';
-    foreach my $v ( qw(1.000005 1.000005_001 1.000005_01 1.000005 1.000005_02 1.000005_002) ) {
+    foreach my $v ( qw(1.000005 1.000005_001 1.000005_01 1.000005 1.000005_02 1.000005_002 1.000005_003) ) {
 		_run( $dir, '-set', $v, '-numify' );
-		is_deeply( find( $dir ), { found => $v }, "bump version without v prefix" );
+		is_deeply( find( $dir ), { found => $v }, "set version from $previous to $v" );
 		$previous = $v;
     	}
   },

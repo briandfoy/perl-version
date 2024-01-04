@@ -362,12 +362,12 @@ sub set {
   my $self  = shift;
   my $other = shift;
 
-  $other = __PACKAGE__->new( $other ) unless ref $other;
+  $other = $self->new( $other ) unless ref $other;
 
   my @comp = $other->components;
-
   $self->components( \@comp );
   $self->alpha( $other->alpha );
+  $self->{format}{alpha} = $other->{format}{alpha};
 }
 
 1;
