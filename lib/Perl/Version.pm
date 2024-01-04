@@ -125,6 +125,14 @@ sub _parse {
   my $format = { fields => 1 };
   my ( $pad, $pfx, $ver, $alp, $sfx ) = ( $1, $2, $3, $4, $5 );
 
+  $self->{original}{args} = [ @_ ];
+  $self->{original}{version} = $version;
+  $self->{original}{pad} = $pad;
+  $self->{original}{pfx} = $pfx;
+  $self->{original}{ver} = $ver;
+  $self->{original}{alp} = $alp;
+  $self->{original}{sfx} = $sfx;
+
   # Decode version into format
   $format->{prefix} = $pad . $pfx;
   $format->{suffix} = $sfx;
