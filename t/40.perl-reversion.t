@@ -221,9 +221,13 @@ package FooBar 1.0;
 END
   sub {
     is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
-    _run( $dir, '-set', '1.000005_001' );
-    _run( $dir, '-bump' );
-    is_deeply( find( $dir ), { found => '1.3' }, "bump version without v prefix" );
+
+	my $previous = '1.0';
+    foreach my $v ( qw(1.000005 1.000005_001 1.000005_01 1.000005 1.000005_02 1.000005_002) ) {
+		_run( $dir, '-set', $v, '-numify' );
+		is_deeply( find( $dir ), { found => $v }, "bump version without v prefix" );
+		$previous = $v;
+    	}
   },
 );
 
