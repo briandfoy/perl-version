@@ -195,12 +195,10 @@ package Foo 1.0;
 1;
 END
   sub {
-    #my %newlines= count_newlines( @files );
     is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
     _run( $dir, '-set', '1.2' );
     _run( $dir, '-bump' );
     is_deeply( find( $dir ), { found => '1.3' }, "bump version without v prefix" );
-    #ok_newlines(\%newlines);
   },
 );
 
@@ -214,6 +212,19 @@ END
 with_file(
   README => "This README describes\x{0d}\x{0a}version 1.2.3 of\x{0d}\x{0a}Flurble.\x{0a}",
   sub { runtests( newlines => "1.2.3" ) },
+);
+
+with_file(
+  "FooBar.pm", <<'END',
+package FooBar 1.0;
+1;
+END
+  sub {
+    is_deeply( find( $dir ), { found => '1.0' }, "package version found in pm" );
+    _run( $dir, '-set', '1.000005_001' );
+    _run( $dir, '-bump' );
+    is_deeply( find( $dir ), { found => '1.3' }, "bump version without v prefix" );
+  },
 );
 
 done_testing();

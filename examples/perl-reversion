@@ -134,7 +134,7 @@ die "Please specify either -set or -bump, not both\n"
  if $set && $bump;
 
 # Directories to skip during expansion
-my @skip = ( qw( .svn .git CVS .DS_Store ), @dir_skip );
+my @skip = ( qw( .svn .git .github blib CVS .DS_Store ), @dir_skip );
 
 # this slightly changes the way it was done before. It's still a
 # regex, but I fixed the regex for precedence with anchors, and
