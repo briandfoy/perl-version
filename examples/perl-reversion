@@ -4,6 +4,8 @@
 #  perl-reversion
 #
 # Update embedded version strings in Perl source
+use utf8;
+use v5.10;
 
 use strict;
 use warnings;
