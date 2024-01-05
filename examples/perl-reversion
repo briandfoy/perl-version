@@ -12,7 +12,6 @@ use Carp qw(croak);
 use Getopt::Long;
 use Pod::Usage;
 use File::Spec;
-use File::Slurp::Tiny qw(read_lines);
 use File::Basename;
 
 # Files that suggest that we have a project directory. The scores next
