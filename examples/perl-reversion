@@ -730,9 +730,17 @@ what gets changed before it actually happens.
 
 =back
 
+=head1 SOURCE
+
+The source is available at:
+
+	https://github.com/briandfoy/perl-version
+
 =head1 AUTHOR
 
 Andy Armstrong  C<< <andy@hexten.net> >>
+
+Currently maintained by brian d foy.
 
 =head1 LICENCE AND COPYRIGHT
 
