@@ -528,13 +528,13 @@ Versions with a leading 'v'.
 
 =item Z<> 5.8, 5.08, 5.008006
 
-Fielded numeric versions. You'll likely have seen this in relation to
-versions of Perl itself. If a version string has a single decimal point,
-it extracts digits in groups of three after the decimal point. If there
-are fewer than three digits in the final group, the field is zero-padded
-to make it three digits (for example, 5.8 becomes 5.008 and 5.08 becomes
-5.008 too). This is how Perl and CPAN has historically treated versions.
-This is true for the arguent as a literal number or a string.
+Fielded numeric versions. If a version string has a single decimal
+point, it extracts digits in groups of three after the decimal point.
+If there are fewer than three digits in the final group, the field is
+left-padded with zeros to make it three digits (for example, 5.8
+becomes 5.008 and 5.08 becomes 5.008 too). This is opposite of how
+Perl and CPAN has historically treated versions by right padding
+groups of three on.
 
 For example
 
