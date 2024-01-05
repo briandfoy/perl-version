@@ -497,6 +497,20 @@ sub load_all {
   }
 }
 
+sub read_lines {
+	my( $file, $mode, %args ) = @_;
+
+	my @lines;
+
+	if( open my $fh, "<$mode", 	$file ) {
+		@lines = <$fh>;
+		close $fh;
+		}
+
+	return \@lines if $args{array_ref};
+	return @lines;
+	}
+
 sub save_all {
   my $docs = shift;
 
