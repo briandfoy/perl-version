@@ -1,5 +1,12 @@
 Revision history for Perl module Perl::Version
 
+1.016 2024-01-05T13:53:50Z
+	* new minimum version is v5.10, for version.pm
+	* git rid of File::Slurp::Tiny
+	* fix case where perl-reversion changes the number of digits used
+	in the alpha section (GitHub #10)
+	* fix a few doc things (GitHub #8 and #9)
+
 1.015 2024-01-04T15:10:25Z
 	* update a few distro things
 	* code is now at https://github.com/briandfoy/perl-version
