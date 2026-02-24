@@ -15,6 +15,7 @@ use Getopt::Long;
 use Pod::Usage;
 use File::Spec;
 use File::Basename;
+use IO::File;
 
 # Files that suggest that we have a project directory. The scores next
 # to each are summed for each candidate directory. The first directory
