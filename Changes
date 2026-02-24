@@ -1,5 +1,8 @@
 Revision history for Perl module Perl::Version
 
+1.019 2026-02-24T23:29:05Z
+	* perl-reversion needs IO::File before perl v5.14 (#12)
+
 1.018 2025-01-27T13:07:40Z
 	* refresh distro and move to BRIANDFOY
 
